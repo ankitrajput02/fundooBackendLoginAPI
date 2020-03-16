@@ -2,13 +2,16 @@ package com.bridgelabz.fundoonotesapi.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.bridgelabz.fundoonotesapi.dto.LoginUserDTO;
 import com.bridgelabz.fundoonotesapi.dto.UserDTO;
 import com.bridgelabz.fundoonotesapi.model.UserClass;
 import com.bridgelabz.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.response.Response;
 import com.bridgelabz.fundoonotesapi.utility.TokenUtility;
+
+import com.sun.istack.logging.Logger;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -18,7 +21,7 @@ public class UserServiceImplementation implements UserService {
 	private TokenUtility tokenUtility;
 	@Autowired
 	private ModelMapper mapper;
-	UserClass user;
+	PasswordEncoder passwordEncoder;
 
 	@Override
 	public Response newUserRegistration(UserDTO userDTO) {
@@ -34,6 +37,23 @@ public class UserServiceImplementation implements UserService {
 		userClass.setPassword(userDTO.getPassword());
 		userRepository.save(userClass);
 		return new Response(200, "User Registration Successfull", token);
+
+	}
+
+	@Override
+	public Response loginUser(LoginUserDTO loginUserDTO) {
+		// It is used in Mapped the Data-->JPA
+		UserClass userClass = userRepository.findByEmail(loginUserDTO.getEmail());
+		// To generate the Token
+		String token = tokenUtility.generateToken(loginUserDTO.getEmail());
+		// Print Token in Console
+		System.out.println(token);
+		if (userClass == null) {
+			
+
+		}
+		return null;
+		
 
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.bridgelabz.fundoonotesapi.dto.LoginUserDTO;
 import com.bridgelabz.fundoonotesapi.dto.UserDTO;
 import com.bridgelabz.fundoonotesapi.response.Response;
 import com.bridgelabz.fundoonotesapi.service.UserService;
@@ -21,6 +21,12 @@ public class UserController {
 	@PostMapping("/adduser")
 	public ResponseEntity<String> newUserRegistration(@RequestBody UserDTO userDTO) {
 		Response response = service.newUserRegistration(userDTO);
+		return new ResponseEntity<String>(response.getMessage(), HttpStatus.OK);
+	}
+
+	@PostMapping("/loginuser")
+	public ResponseEntity<String> loginUser(@RequestBody LoginUserDTO loginUserDTO) {
+		Response response = service.loginUser(loginUserDTO);
 		return new ResponseEntity<String>(response.getMessage(), HttpStatus.OK);
 	}
 
