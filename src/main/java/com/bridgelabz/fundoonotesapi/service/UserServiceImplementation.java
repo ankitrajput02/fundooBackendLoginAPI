@@ -22,7 +22,7 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public Response newUserRegistration(UserDTO userDTO) {
-		UserClass checkEmail = userRepository.findByEmail(user.getEmail());
+		UserClass checkEmail = userRepository.findByEmail(userDTO.getEmail());
 		if (checkEmail != null) {
 			return new Response(200, "Invalid User", false);
 		}
