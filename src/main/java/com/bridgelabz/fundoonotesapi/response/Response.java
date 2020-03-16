@@ -5,7 +5,6 @@ public class Response {
 	private String message;
 	private Object data;
 	public Response(int statusCode, String message, Object data) {
-		super();
 		this.statusCode = statusCode;
 		this.message = message;
 		this.data = data;

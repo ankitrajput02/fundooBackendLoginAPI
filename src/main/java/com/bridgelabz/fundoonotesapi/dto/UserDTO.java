@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @SuppressWarnings("deprecation")
-public class RegistrationDTO {
+public class UserDTO {
 	@Valid
 	@NotEmpty(message = "please provide first name")
 	private String firstName;

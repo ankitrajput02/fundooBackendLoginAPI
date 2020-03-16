@@ -1,9 +1,7 @@
 package com.bridgelabz.fundoonotesapi.repository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import com.bridgelabz.fundoonotesapi.model.User;
-@Repository
-public interface UserRepository extends JpaRepository<User,Object>{
-	User findByEmail(String email);
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bridgelabz.fundoonotesapi.model.UserClass;
+public interface UserRepository extends JpaRepository<UserClass, Object> {
+	UserClass findByEmail(String email);
 }

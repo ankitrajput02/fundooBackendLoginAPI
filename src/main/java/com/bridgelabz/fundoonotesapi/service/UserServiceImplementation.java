@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bridgelabz.fundoonotesapi.dto.RegistrationDTO;
-import com.bridgelabz.fundoonotesapi.model.User;
+import com.bridgelabz.fundoonotesapi.dto.UserDTO;
+import com.bridgelabz.fundoonotesapi.model.UserClass;
 import com.bridgelabz.fundoonotesapi.repository.UserRepository;
 import com.bridgelabz.fundoonotesapi.response.Response;
 import com.bridgelabz.fundoonotesapi.utility.TokenUtility;
@@ -18,24 +18,23 @@ public class UserServiceImplementation implements UserService {
 	private TokenUtility tokenUtility;
 	@Autowired
 	private ModelMapper mapper;
+	UserClass user;
 
 	@Override
-	public Response addUser(RegistrationDTO registrationDTO) {
-		User checkEmail = userRepository.findByEmail(registrationDTO.getEmail());
+	public Response newUserRegistration(UserDTO userDTO) {
+		UserClass checkEmail = userRepository.findByEmail(user.getEmail());
 		if (checkEmail != null) {
 			return new Response(200, "Invalid User", false);
 		}
-		User user = mapper.map(registrationDTO, User.class);
-		System.out.println(registrationDTO.getEmail());
-		String token = tokenUtility.generateToken(user.getEmail());
+		UserClass userClass = mapper.map(userDTO, UserClass.class);
+		System.out.println(userDTO.getEmail());
+		String token = tokenUtility.generateToken(userClass.getEmail());
 		System.out.println(token);
-		
-		user.setPassword(registrationDTO.getPassword());
-		userRepository.save(user);
+
+		userClass.setPassword(userDTO.getPassword());
+		userRepository.save(userClass);
 		return new Response(200, "User Registration Successfull", token);
 
 	}
-	
 
-	
 }
