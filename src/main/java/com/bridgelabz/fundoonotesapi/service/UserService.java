@@ -7,4 +7,5 @@ import com.bridgelabz.fundoonotesapi.response.Response;
 public interface UserService {
 	Response newUserRegistration(UserDTO userDTO);
 	Response loginUser(LoginUserDTO loginUserDTO);
+	Response isValidateUser(String token);
 }

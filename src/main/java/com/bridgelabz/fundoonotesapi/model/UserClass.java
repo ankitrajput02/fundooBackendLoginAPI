@@ -23,7 +23,7 @@ public class UserClass {
 	private String password;
 	private long phone;
 	private Date date = new Date();
-
+	private boolean setValidate=false;
 	public int getId() {
 		return id;
 	}
@@ -76,5 +76,13 @@ public class UserClass {
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + ", phone=" + phone + ", date=" + date + "]";
+	}
+
+	public boolean isSetValidate() {
+		return setValidate;
+	}
+
+	public void setSetValidate(boolean setValidate) {
+		this.setValidate = setValidate;
 	}
 }

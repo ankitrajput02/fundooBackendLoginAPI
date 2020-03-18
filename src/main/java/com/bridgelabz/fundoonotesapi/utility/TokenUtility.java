@@ -19,7 +19,7 @@ public class TokenUtility {
 
 	// Algorithm
 	SignatureAlgorithm alorithm = SignatureAlgorithm.HS256;
-	// secret Key used by Algorithm\
+	// secret Key used by Algorithm
 	String secretKey = "ankit";
 
 	// Generate the Token
