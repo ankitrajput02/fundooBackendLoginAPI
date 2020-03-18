@@ -2,7 +2,6 @@ package com.bridgelabz.fundoonotesapi.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bridgelabz.fundoonotesapi.dto.LoginUserDTO;
@@ -20,9 +19,7 @@ public class UserServiceImplementation implements UserService {
 	private TokenUtility tokenUtility;
 	@Autowired
 	private ModelMapper mapper;
-	//PasswordEncoder passwordEncoder;
-	private PasswordEncoder PasswordEncoder;
-	@Override
+
 	public Response newUserRegistration(UserDTO userDTO) {
 		UserClass checkEmail = userRepository.findByEmail(userDTO.getEmail());
 		if (checkEmail != null) {
@@ -36,10 +33,8 @@ public class UserServiceImplementation implements UserService {
 		userClass.setPassword(userDTO.getPassword());
 		userRepository.save(userClass);
 		return new Response(200, "User Registration Successfull", token);
-
 	}
 
-	@Override
 	public Response isValidateUser(String token) {
 		String email = tokenUtility.getToken(token);
 		UserClass userClass = userRepository.findByEmail(email);
@@ -50,10 +45,8 @@ public class UserServiceImplementation implements UserService {
 		}
 		userRepository.save(userClass);
 		return new Response(200, "Validate", token);
-
 	}
 
-	@Override
 	public Response loginUser(LoginUserDTO loginUserDTO) {
 		UserClass userClass = userRepository.findByEmail(loginUserDTO.getEmail());
 		String token = tokenUtility.generateToken(loginUserDTO.getEmail());
@@ -61,17 +54,10 @@ public class UserServiceImplementation implements UserService {
 		if (userClass == null) {
 			return new Response(200, "Invalid User", false);
 		}
-		if(userClass.isSetValidate()) {
-			if(PasswordEncoder.matches(loginUserDTO.getPassword(),userClass.getPassword())) {
-				userRepository.save(userClass);
-				return new Response(200, "Login Success", token);
-			}
-			else {
-				return new Response(200, "User Already Login", token);
-			}
+		if(loginUserDTO.getPassword().equals(userClass.getPassword())) {
+			userRepository.save(userClass);
+			return new Response(200, "Login Success", token);
 		}
-		return new Response(200,"Email Invalid", token);
-
+		return new Response(200,"Invalid Password", false);
 	}
-
 }
